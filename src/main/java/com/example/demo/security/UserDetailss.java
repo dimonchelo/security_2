@@ -5,10 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class UserDetailss implements org.springframework.security.core.userdetails.UserDetails {
     private final User user;
 
-    public UserDetails(User user) {
+    public UserDetailss(User user) {
         this.user = user;
     }
 
@@ -19,12 +19,12 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Override
     public String getPassword() {
-        return user.getPassword().toString();
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return this.user.getName();
     }
 
     @Override
@@ -45,5 +45,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    public User getUser() {
+        return this.user;
     }
 }

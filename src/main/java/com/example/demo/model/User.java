@@ -19,17 +19,18 @@ public class User {
     @Column(name = "name")
     private String name;
     @Column(name = "password")
-    private Integer password;
+    private String password;
     @NotEmpty(message = "lastname empty")
     @Size(min = 2, max = 30, message = "lastname size [2-30]")
     @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
     @Column(name = "lastName")
     private String lastName;
 
+
     public User() {
     }
 
-    public User(String name, String lastName, Integer password) {
+    public User(String name, String lastName, String password) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;
@@ -59,13 +60,14 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Integer getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Integer password) {
+    public void setPassword(String password) {
         this.password = password;
     }
+
 
     @Override
     public String toString() {
