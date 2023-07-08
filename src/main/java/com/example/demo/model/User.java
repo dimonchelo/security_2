@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -26,7 +27,8 @@ public class User implements UserDetails {
     @NotEmpty(message = "password empty")
     private String password;
 
-
+    @OneToMany(mappedBy = "user")
+    private List<Role> roles;
     @NotEmpty(message = "lastname empty")
     @Size(min = 2, max = 30, message = "lastname size [2-30]")
     @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
@@ -37,6 +39,21 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(int id, String name, String password, List<Role> roles, String lastName) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
+        this.lastName = lastName;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public int getId() {
         return id;
