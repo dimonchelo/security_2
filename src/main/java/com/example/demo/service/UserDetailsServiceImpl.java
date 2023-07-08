@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
-import com.example.demo.security.UserDetailss;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Optional<User> user = userRepository.findByName(username);
         if (user.isEmpty())
             throw new UsernameNotFoundException("name -");
-        return new UserDetailss(user.get());
+        return user.get();
 
     }
 }

@@ -15,13 +15,14 @@
   <br>
   <label for="password">enter password</label>
   <input type="password" th:field="*{password}" id="password"/>
-  <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">name error</div>
+  <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
   <br>
+
   <input type="submit" value="update"/>
 </form>
 <form th:method="delete" th:action="@{/{id}(id=${user.getId()})}">
       <input type="submit" value="delete">
 </form>
-
+<a th:href="@{/logout}">logout</a>
 </body>
 </html>

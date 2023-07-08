@@ -23,7 +23,10 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
     @Column(name = "password")
+    @NotEmpty(message = "password empty")
     private String password;
+
+
     @NotEmpty(message = "lastname empty")
     @Size(min = 2, max = 30, message = "lastname size [2-30]")
     @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
@@ -34,11 +37,6 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String lastName, String password) {
-        this.name = name;
-        this.lastName = lastName;
-        this.password = password;
-    }
 
     public int getId() {
         return id;
@@ -69,6 +67,15 @@ public class User implements UserDetails {
         return null; // rols
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
 
 
     @Override

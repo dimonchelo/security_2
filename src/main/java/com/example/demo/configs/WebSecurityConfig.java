@@ -45,7 +45,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login", "/error").permitAll()
+                .requestMatchers("/login", "/error", "/new").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(
@@ -54,11 +54,10 @@ public class WebSecurityConfig {
                                 .loginProcessingUrl("/process_login")
                                 .defaultSuccessUrl("/")
                                 .failureUrl("/login?error")
-//                ).logout(
-//                        logout -> logout
-//                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                                .permitAll()
-
+                ).logout(
+                        logout -> logout
+                                .logoutUrl("/logout").permitAll()
+                                .logoutSuccessUrl("/login")
                 );
         return http.build();
     }

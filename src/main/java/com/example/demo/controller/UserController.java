@@ -35,6 +35,7 @@ public class UserController {
         return "login";
     }
 
+
     @PostMapping()
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
