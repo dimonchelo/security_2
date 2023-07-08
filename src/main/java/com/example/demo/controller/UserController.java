@@ -30,6 +30,10 @@ public class UserController {
         modelMap.addAttribute("user", new User());
         return "/new";
     }
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {

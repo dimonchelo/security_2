@@ -11,7 +11,11 @@
     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
     <label for="lastName">enter lastName</label>
     <input type="text" th:field="*{lastName}" id="lastName"/>
-    <div th:if="${#fields.hasErrors('name')}" th:errors="*{lastName}">name error</div>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{lastName}">lastname error</div>
+    <br>
+    <label for="password">enter password</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{lastName}">password error</div>
     <br>
   <input type="submit" value="Create"/>
 </form>
