@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -17,66 +18,74 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
-    @NotEmpty(message = "name empty")
-    @Size(min = 2, max = 30, message = "name size [2-30]")
-    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
-    @Column(name = "name")
-    private String name;
+    private Long id;
+//    @NotEmpty(message = "username empty")
+//    @Size(min = 2, max = 30, message = "name size [2-30]")
+//    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
-    @NotEmpty(message = "password empty")
+//    @NotEmpty(message = "password empty")
     private String password;
+    @Transient
+    private String passwordConfirm;
 
-    @OneToMany(mappedBy = "user")
-    private List<Role> roles;
-    @NotEmpty(message = "lastname empty")
-    @Size(min = 2, max = 30, message = "lastname size [2-30]")
-    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
-    @Column(name = "lastName")
-    private String lastName;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+//    @NotEmpty(message = "user lastName empty")
+//    @Size(min = 2, max = 30, message = "lastname size [2-30]")
+//    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
+    @Column(name = "userLastName")
+    private String userLastName;
 
+    public User(Long id, String username, String password, Set<Role> roles, String userLastName) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.userLastName = userLastName;
+    }
 
     public User() {
     }
-
-    public User(int id, String name, String password, List<Role> roles, String lastName) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.roles = roles;
-        this.lastName = lastName;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     @Override
@@ -91,7 +100,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
 
@@ -121,12 +130,5 @@ public class User implements UserDetails {
     }
 
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }
+
 }

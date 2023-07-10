@@ -14,18 +14,20 @@
     <tr>
     <tr th:each="user : ${message}">
         <td th:utext="${user.getId()}"></td>
-        <td th:utext="${user.getName()}"></td>
-        <td th:utext="${user.getLastName()}"></td>
+        <td th:utext="${user.getUsername()}"></td>
+        <td th:utext="${user.getUserLastName()}"></td>
         <td th:utext="${user.getPassword()}"></td>
+    <td th:utext="${user.getRoles()}"></td>
     </tr>
     <a th:href="@{/new}">Create new user</a>
     <br>
     <div th:each="user : ${message}">
         <a th:href="@{/{id}/edit(id=${user.getId()})}">Update or delete user</a>
         <a th:utext="${user.getId()}">user</a>
-        <a th:utext="${user.getName()}"></a>
-        <a th:utext="${user.getLastName()}"></a>
-        <a th:utext="${user.getPassword()}">></a>
+        <a th:utext="${user.getUsername()}"></a>
+        <a th:utext="${user.getUserLastName()}"></a>
+        <a th:utext="${user.getPassword()}"></a>
+        <a th:utext="${user.getRoles()}"></a>
     </div>
 </table>
 </body>

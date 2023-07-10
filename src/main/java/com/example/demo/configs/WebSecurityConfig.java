@@ -1,12 +1,11 @@
 package com.example.demo.configs;
 
-import com.example.demo.service.UserDetailsServiceImpl;
+import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
@@ -17,9 +16,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import static javax.management.Query.and;
 
 @Configuration
 @EnableWebSecurity
@@ -27,11 +23,11 @@ public class WebSecurityConfig {
 
     private SuccessUserHandler successUserHandler;
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UsersService usersService;
 
     @Autowired
-    public WebSecurityConfig(@Lazy UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    public WebSecurityConfig(@Lazy UsersService usersService) {
+        this.usersService = usersService;
     }
 
 
@@ -43,16 +39,18 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
                 .authorizeRequests()
-                .requestMatchers("/login", "/error", "/new").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/login", "/error", "/new","/registration","/registration_procces").permitAll()
+
+
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/process_login")
-                                .defaultSuccessUrl("/")
+                                .defaultSuccessUrl("/allusers", true)
                                 .failureUrl("/login?error")
                 ).logout(
                         logout -> logout
@@ -64,19 +62,9 @@ public class WebSecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userDetailsService);
+        builder.userDetailsService(usersService);
 
     }
-    // аутентификация inMemory
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("user")
-                        .roles("USER")
-                        .build();
 
-        return new InMemoryUserDetailsManager(user);
-    }
+
 }
