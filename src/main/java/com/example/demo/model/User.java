@@ -27,18 +27,22 @@ public class User implements UserDetails {
     @Column(name = "password")
 //    @NotEmpty(message = "password empty")
     private String password;
-    @Transient
-    private String passwordConfirm;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
-//    @NotEmpty(message = "user lastName empty")
+    //    @NotEmpty(message = "user lastName empty")
 //    @Size(min = 2, max = 30, message = "lastname size [2-30]")
 //    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
     @Column(name = "userLastName")
     private String userLastName;
+    @Transient
+    private String passwordConfirm;
 
-    public User(Long id, String username, String password, Set<Role> roles, String userLastName) {
+    @ManyToMany
+    @JoinTable( name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles;
+
+
+    public User(Long id, String username, String password, List<Role> roles, String userLastName) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -72,11 +76,11 @@ public class User implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

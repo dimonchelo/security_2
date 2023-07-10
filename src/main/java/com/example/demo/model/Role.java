@@ -10,7 +10,9 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
     @Transient
     @ManyToMany(mappedBy = "roles")

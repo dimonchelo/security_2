@@ -22,6 +22,9 @@ public class UsersService implements UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,7 +34,11 @@ public class UsersService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return user;
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.getRoles() //?
+        );
     }
     @Transactional
     public User show(Long id) {
@@ -45,7 +52,7 @@ public class UsersService implements UserDetailsService {
 
     @Transactional
     public void add(User user) {
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setRoles(List.of(roleRepository.findByName("ROLE_USER").get()));
         userRepository.save(user);
     }
     @Transactional
@@ -56,7 +63,7 @@ public class UsersService implements UserDetailsService {
     @Transactional
     public void update(User user, Long id) {
         user.setId(id);
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setRoles(List.of(roleRepository.findByName("ROLE_USER").get()));
         userRepository.save(user);
     }
 }
