@@ -34,7 +34,7 @@ public class AdminController {
         modelMap.addAttribute(usersService.show(id));
         return "/update";
     }
-    @GetMapping("/allusers")
+    @GetMapping("/admin")
     public String allUsers(ModelMap model) {
         model.addAttribute("message", usersService.listUser());
         return "/users";

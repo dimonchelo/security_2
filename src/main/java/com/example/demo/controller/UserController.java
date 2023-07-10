@@ -28,7 +28,7 @@ public class UserController {
         usersService.delete(user);
         return "redirect:/login";
     }
-    @GetMapping("/editSolo")
+    @GetMapping("/user")
     public String editSolo(Principal principal , ModelMap model) {
         User user = usersService.findByUsername(principal.getName());
         model.addAttribute("message", user );
