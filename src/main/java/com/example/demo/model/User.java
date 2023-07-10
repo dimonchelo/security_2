@@ -19,17 +19,17 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-//    @NotEmpty(message = "username empty")
-//    @Size(min = 2, max = 30, message = "name size [2-30]")
-//    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
+    @NotEmpty(message = "username empty")
+    @Size(min = 2, max = 30, message = "name size [2-30]")
+    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
     @Column(name = "username")
     private String username;
     @Column(name = "password")
-//    @NotEmpty(message = "password empty")
+    @NotEmpty(message = "password empty")
     private String password;
-    //    @NotEmpty(message = "user lastName empty")
-//    @Size(min = 2, max = 30, message = "lastname size [2-30]")
-//    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
+    @NotEmpty(message = "user lastName empty")
+    @Size(min = 2, max = 30, message = "lastname size [2-30]")
+    @Pattern(regexp = "[A-Za-z]+", message = "only A-Z , a-z")
     @Column(name = "userLastName")
     private String userLastName;
     @Transient

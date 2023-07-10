@@ -9,6 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 public class RegistrationController {
     @Autowired
@@ -34,32 +36,18 @@ public class RegistrationController {
         if (bindingResult.hasErrors())
             return "/registration";
         usersService.add(user);
-
         return "redirect:/login";
     }
-    @GetMapping("/allusers")
-    public String allUsers(ModelMap model) {
-        model.addAttribute("message", usersService.listUser());
-        return "users";
+    @GetMapping("/createAdmin")
+    public String createAdmin(ModelMap model) {
+        model.addAttribute("user", new User());
+        return "/createAdmin";
     }
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") Long id, ModelMap modelMap) {
-        modelMap.addAttribute(usersService.show(id));
-        return "/update";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") Long id) {
+    @PostMapping("/createAdmin_procces")
+    public String addAdmin(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "/update";
-        usersService.update(user, id);
-        return "redirect:/allusers";
+            return "/createAdmin";
+        usersService.addAdmin(user);
+        return "redirect:/login";
     }
-
-    @DeleteMapping("/{id}")
-    public String delete(@ModelAttribute("user") User user) {
-        usersService.delete(user);
-        return "redirect:/allusers";
-    }
-
 }

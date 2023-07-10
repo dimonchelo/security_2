@@ -5,17 +5,17 @@
     <title>new user</title>
 </head>
 <body>
-<form th:method="post" th:action="@{/}" th:object="${user}">
-    <label for="name">enter name</label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
-    <label for="lastName">enter lastName</label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <div th:if="${#fields.hasErrors('name')}" th:errors="*{lastName}">lastname error</div>
+<form th:method="post" th:action="@{/new_procces}" th:object="${user}">
+    <label for="username">enter name</label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">name error</div>
+    <label for="userLastName">enter lastName</label>
+    <input type="text" th:field="*{userLastName}" id="userLastName"/>
+    <div th:if="${#fields.hasErrors('userLastName')}" th:errors="*{userLastName}">lastname error</div>
     <br>
     <label for="password">enter password</label>
     <input type="password" th:field="*{password}" id="password"/>
-    <div th:if="${#fields.hasErrors('password')}" th:errors="*{lastName}">password error</div>
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
     <br>
   <input type="submit" value="Create"/>
 </form>

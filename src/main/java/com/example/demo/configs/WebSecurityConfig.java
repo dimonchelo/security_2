@@ -24,7 +24,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
+    @Autowired
     private SuccessUserHandler successUserHandler;
     @Autowired
     private UsersService usersService;
@@ -38,15 +38,17 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login", "/error", "/new","/registration","/registration_procces").permitAll()
-                .requestMatchers("/1/edit").hasRole("USER")
+                .requestMatchers("/login", "/error","/registration","/registration_procces","/createAdmin", "createAdmin_procces").permitAll()
+                .requestMatchers("/edit/**").hasRole("USER")
+                .requestMatchers("/allusers").hasRole("ADMIN")
+                .requestMatchers("/new").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/process_login")
-                                .defaultSuccessUrl("/allusers", true)
+                                .successHandler(successUserHandler)
                                 .failureUrl("/login?error")
                 ).logout(
                         logout -> logout

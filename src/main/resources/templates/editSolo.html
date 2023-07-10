@@ -19,7 +19,6 @@
         <td th:utext="${user.getPassword()}"></td>
 
     </tr>
-    <a th:href="@{/new}">Create new user</a>
     <br>
     <div th:each="user : ${message}">
         <a th:href="@{/{id}/edit(id=${user.getId()})}">Update or delete user</a>
